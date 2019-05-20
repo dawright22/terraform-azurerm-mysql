@@ -23,3 +23,9 @@ vendor/
 # IDE config files
 **/.idea/*
 **/.vscode/*
+
+# MacOS files
+.DS_Store
+
+# Ruby downloaded package lock file.
+Gemfile.lock
