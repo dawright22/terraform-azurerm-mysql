@@ -14,7 +14,7 @@ variable "my_environment" {
 }
 
 variable "envname" {
-  type    = "map" 
+  type    = map(string)
   default = {
     "production" = ""
     "development" = "-dev"
@@ -30,7 +30,7 @@ variable "location" {
 }
 
 variable "tags" {
-  type    = "map"
+  type    = map(string)
   default = {
     "Project" = "Some project nr. 010011"
   }
