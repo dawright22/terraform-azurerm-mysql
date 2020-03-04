@@ -1,7 +1,7 @@
 resource "azurerm_resource_group" "mysql" {
   name     = "${local.name_prefix}${var.resource_group}${local.name_suffix}"
-  location = "${var.location}"
-	tags     = "${var.tags}"
+  location = var.location
+	tags     = var.tags
 }
 
 resource "azurerm_mysql_server" "mysql" {
