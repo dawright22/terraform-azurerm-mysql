@@ -6,8 +6,8 @@ resource "azurerm_resource_group" "mysql" {
 
 resource "azurerm_mysql_server" "mysql" {
   name                = "${local.name_prefix}${var.db_server_name}${local.name_suffix}"
-  location            = "${azurerm_resource_group.mysql.location}"
-  resource_group_name = "${azurerm_resource_group.mysql.name}"
+  location            = azurerm_resource_group.mysql.location
+  resource_group_name = azurerm_resource_group.mysql.name
 
   sku {
     name     = var.sku_name
@@ -30,16 +30,16 @@ resource "azurerm_mysql_server" "mysql" {
 
 resource "azurerm_mysql_database" "mysql" {
   name                = "${var.db_name}${local.name_suffix}"
-  resource_group_name = "${azurerm_resource_group.mysql.name}"
-  server_name         = "${azurerm_mysql_server.mysql.name}"
+  resource_group_name = azurerm_resource_group.mysql.name
+  server_name         = azurerm_mysql_server.mysql.name
   charset             = var.charset
   collation           = var.collation
 }
 
 resource "azurerm_mysql_firewall_rule" "mysql" {
   name                = "${var.firewall_rule_name}${local.name_suffix}"
-  resource_group_name = "${azurerm_resource_group.mysql.name}"
-  server_name         = "${azurerm_mysql_server.mysql.name}"
+  resource_group_name = azurerm_resource_group.mysql.name
+  server_name         = azurerm_mysql_server.mysql.name
   start_ip_address    = var.start_ip_address
   end_ip_address      = var.end_ip_address
 }
@@ -47,7 +47,7 @@ resource "azurerm_mysql_firewall_rule" "mysql" {
 resource "azurerm_management_lock" "conditional" {
   count      = "${var.create_lock ? 1 : 0}"
   name       = "${var.resource_lock_name}${local.name_suffix}"
-  scope      = "${azurerm_resource_group.mysql.id}"
+  scope      = azurerm_resource_group.mysql.id
   lock_level = var.lock_level
   notes      = var.notes
 }
